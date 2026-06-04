@@ -48,7 +48,7 @@ A simple Node.js web app to track your reading list.
 
 
 Project Structure
-
+```
 
 ├── index.js          # Express server & routes
 ├── app.js            # Mongoose model
@@ -57,7 +57,7 @@ Project Structure
 │   ├── insights.ejs  # Stats, filters, book library
 │   └── edit.ejs      # Edit / delete a book
 └── public/           # Static assets
-
+```
 
 
 
