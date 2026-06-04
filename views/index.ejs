@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inkwell - Book Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1em;
+      opacity: 0.85;
+    }
+
+    .form-container {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-container h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+      font-size: 0.92em;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 10px 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 0.95em;
+      color: #333;
+      transition: border-color 0.2s;
+      background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea {
+      grid-column: 1 / -1;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .button-group {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-reset {
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .btn-reset:hover {
+      background: #ebebeb;
+    }
+
+    a.btn-submit {
+      display: block;
+      margin-top: 14px;
+      padding: 12px 20px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 1em;
+      font-family: inherit;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      transition: all 0.2s;
+    }
+
+    a.btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    a.btn-submit div {
+      display: inline;
+    }
+
+
+.filter-container {
+  background: white;
+  border-radius: 10px;
+  padding: 24px 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.filter-container h2 {
+  color: #667eea;
+  margin-bottom: 18px;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  align-items: end;
+}
+
+.btn-filter-apply {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.btn-filter-apply:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.filter-clear {
+  display: block;
+  margin-top: 10px;
+  text-align: right;
+  color: #667eea;
+  font-size: 0.88em;
+  font-weight: 600;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.filter-clear:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+
+.book-card {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 Inkwell</h1>
+    </header>
+
+    <div class="form-container">
+      <h2>Add New Book</h2>
+      <form method="POST" action="/addbook">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="title">Title *</label>
+            <input type="text" id="title" name="title" required>
+          </div>
+          <div class="form-group">
+            <label for="author">Author *</label>
+            <input type="text" id="author" name="author" required>
+          </div>
+          <div class="form-group">
+            <label for="genre">Genre *</label>
+            <input type="text" id="genre" name="genre" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Status *</label>
+            <select id="status" name="status" required>
+              <option value="">Select Status</option>
+              <option value="Reading">Reading</option>
+              <option value="Finished">Finished</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rating">Rating (1-5)</label>
+            <input type="number" id="rating" name="rating" min="1" max="5" step="0.5">
+          </div>
+          <div class="form-group">
+            <label for="review">Review</label>
+            <textarea id="review" name="review" placeholder="Share your thoughts about this book..."></textarea>
+          </div>
+          <div class="button-group">
+            <button type="submit" class="btn-submit">Add Book</button>
+          </div>
+        </div>
+      </form>
+      <a class="btn-submit" href="/insights">View Insights and books </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inkwell - Book Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1em;
+      opacity: 0.85;
+    }
+
+    .form-container {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-container h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+      font-size: 0.92em;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 10px 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 0.95em;
+      color: #333;
+      transition: border-color 0.2s;
+      background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea {
+      grid-column: 1 / -1;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .button-group {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-reset {
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .btn-reset:hover {
+      background: #ebebeb;
+    }
+
+    a.btn-submit {
+      display: block;
+      margin-top: 14px;
+      padding: 12px 20px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 1em;
+      font-family: inherit;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      transition: all 0.2s;
+    }
+
+    a.btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    a.btn-submit div {
+      display: inline;
+    }
+
+    .books-section h2 {
+      color: white;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .book-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .book-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .book-card h3 {
+      color: #667eea;
+      margin-bottom: 8px;
+      font-size: 1.3em;
+      word-wrap: break-word;
+    }
+
+    .book-card .author {
+      color: #764ba2;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 0.95em;
+    }
+
+    .book-card .genre {
+      display: inline-block;
+      background: #f0f0f0;
+      color: #667eea;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .book-card .status {
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 0.85em;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .status.reading {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status.finished {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .book-card .rating {
+      color: #f39c12;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 0.95em;
+    }
+
+    .book-card .review {
+      color: #666;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+      line-height: 1.4;
+      flex-grow: 1;
+      word-wrap: break-word;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-delete {
+      flex: 1;
+      padding: 10px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-delete:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+    }
+
+    .no-books {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      color: white;
+      font-size: 1.1em;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .books-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.8em; }
+    }
+
+    .insights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .insight-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .insight-card h3 {
+      color: #667eea;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .insight-card .value {
+      font-size: 2em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .filter-container {
+      background: white;
+      border-radius: 10px;
+      padding: 24px 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .filter-container h2 {
+      color: #667eea;
+      margin-bottom: 18px;
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      align-items: end;
+    }
+
+    .btn-filter-apply {
+      padding: 10px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .btn-filter-apply:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .filter-clear {
+      display: block;
+      margin-top: 10px;
+      text-align: right;
+      color: #667eea;
+      font-size: 0.88em;
+      font-weight: 600;
+      text-decoration: none;
+      opacity: 0.8;
+    }
+
+    .filter-clear:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 Inkwell</h1>
+    </header>
+    <div class="insights">
+      <div class="insight-card">
+        <h3>Total Books</h3>
+        <div class="value"><%= insights.totalBooks %></div>
+      </div>
+      <div class="insight-card">
+        <h3>Average Rating</h3>
+        <div class="value"><%= insights.averageRating %></div>
+      </div>
+      <div class="insight-card">
+        <h3>Most Read Genre</h3>
+        <div class="value"><%= insights.mostReadGenre %></div>
+      </div>
+    </div>
+
+    <div class="filter-container">
+      <h2>Filter Books</h2>
+      <form method="GET" action="/insights">
+        <div class="filter-grid">
+          <div class="form-group">
+            <label for="filterGenre">Genre</label>
+            <input
+              type="text"
+              id="filterGenre"
+              name="genre"
+              placeholder="e.g. Fiction"
+              value="<%= typeof filterGenre !== 'undefined' ? filterGenre : '' %>"
+            >
+          </div>
+          <div class="form-group">
+            <label for="filterStatus">Status</label>
+            <select id="filterStatus" name="status">
+              <option value="">All</option>
+              <option value="Reading"  <%= typeof filterStatus !== 'undefined' && filterStatus === 'Reading'  ? 'selected' : '' %>>Reading</option>
+              <option value="Finished" <%= typeof filterStatus !== 'undefined' && filterStatus === 'Finished' ? 'selected' : '' %>>Finished</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn-filter-apply">Apply Filter</button>
+          </div>
+        </div>
+      </form>
+      <% if ((typeof filterGenre !== 'undefined' && filterGenre) || (typeof filterStatus !== 'undefined' && filterStatus)) { %>
+        <a class="filter-clear" href="/insights">✕ Clear filters</a>
+      <% } %>
+    </div> 
+    <div class="books-section">
+      <h2>Your Library</h2>
+      <% if (books.length === 0) { %>
+        <div class="no-books">
+          <p>📖 No books found. Try adjusting your filters or add a new book!</p>
+        </div>
+      <% } else { %>
+        <div class="books-grid" id="booksGrid">
+          <% books.forEach(book => { %>
+            <a class="book-card" href="/edit/<%= book._id %>">
+              <h3><%= book.Title %></h3>
+              <div class="author">by <%= book.Author %></div>
+              <span class="genre"><%= book.Genre %></span>
+              <div class="status <%= book.Status.toLowerCase() %>"><%= book.Status %></div>
+              <% if (book.rating) { %>
+                <div class="rating">⭐ <%= book.rating %>/5</div>
+              <% } %>
+              <% if (book.Review) { %>
+                <div class="review"><strong>Review:</strong> <%= book.Review %></div>
+              <% } %>
+            </a>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+    <a class="btn-submit" href="/" style="margin-top: 30px;">← Back to Home</a>
+
+  </div>
+</body>
+</html>
