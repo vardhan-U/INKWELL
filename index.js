@@ -19,12 +19,12 @@ app.post('/addbook', async (req, res) => {
   try {
     const { author, title, genre, status, rating, review } = req.body;
     const newBook = new Book({
-      Author: author,
-      Title: title,
-      Genre: genre,
-      Status: status,
-      rating,
-      Review: review
+      author: author,
+      title: title,
+      genre: genre,
+      status: status,
+      rating: rating || null,
+      review: review
     });
     await newBook.save();
     res.redirect('/');
@@ -38,11 +38,11 @@ app.get('/insights', async (req, res) => {
   try {
     let query = {};
     
-    if (req.query.Genre) {
-      query.Genre = req.query.genre;
+    if (req.query.genre) {
+      query.genre = req.query.genre;
     }
-    if (req.query.Status) {
-      query.Status = req.query.status;
+    if (req.query.status) {
+      query.status = req.query.status;
     }
 
     const books = await Book.find(query).sort({ createdAt: -1 });
@@ -77,8 +77,8 @@ app.get('/insights', async (req, res) => {
       },
       books,
       
-      filterGenre: req.query.Genre || '',
-      filterStatus: req.query.Status || ''
+      filterGenre: req.query.genre || '',
+      filterStatus: req.query.status || ''
     });
   } catch (err) {
     console.error(err);
@@ -101,12 +101,12 @@ app.post('/edit/:id', async (req, res) => {
   try {
     const { title, author, genre, status, rating, review } = req.body;
     await Book.findByIdAndUpdate(req.params.id, {
-      Title: title,
-      Author: author,
-      Genre: genre,
-      Status: status,
+      title: title,
+      author: author,
+      genre: genre,
+      status: status,
       rating: rating || null,
-      Review: review
+      review: review
     });
     res.redirect('/insights');
   } catch (err) {

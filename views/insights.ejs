@@ -437,15 +437,15 @@
         <div class="books-grid" id="booksGrid">
           <% books.forEach(book => { %>
             <a class="book-card" href="/edit/<%= book._id %>">
-              <h3><%= book.Title %></h3>
-              <div class="author">by <%= book.Author %></div>
-              <span class="genre"><%= book.Genre %></span>
-              <div class="status <%= book.Status.toLowerCase() %>"><%= book.Status %></div>
+              <h3><%= book.title %></h3>
+              <div class="author">by <%= book.author %></div>
+              <span class="genre"><%= book.genre %></span>
+              <div class="status <%= book.status %>"><%= book.status %></div>
               <% if (book.rating) { %>
                 <div class="rating">⭐ <%= book.rating %>/5</div>
               <% } %>
-              <% if (book.Review) { %>
-                <div class="review"><strong>Review:</strong> <%= book.Review %></div>
+              <% if (book.review) { %>
+                <div class="review"><strong>Review:</strong> <%= book.review %></div>
               <% } %>
             </a>
           <% }); %>
